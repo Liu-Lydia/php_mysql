@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form name="form1" onsubmit="checkForm() ; return false ;">
+        <input type="text" id="account" name="account" placeholder="帳號"><br />
+        <!-- id通常和name會一樣名稱 -->
+        <input type="password" id="password" name="password" placeholder="密碼"><br />
+        <input type="submit">
+    </form>
+ <script>
+    //  function checkForm(){
+    //      const fd = new FormData(document.form1);
+
+    //      fetch('a20201207-03-form.php',{
+    //          method:'POST',
+    //          body:fd
+    //      })
+    //      .then(r=>r.json())
+    //      .then(obj=>{console.log(obj);
+    //      })
+    //      console.log('aaa');
+    //  }
+
+     function checkForm(){
+         const fd = new FormData(document.form1);
+
+         fetch('a20201207-03-form.php',{
+             method:'POST',
+             body:fd
+         })
+         .then(function(response){
+             return response.text();
+         })
+         .then(function(str){
+             console.log(str);
+         })
+         console.log('aaa');
+     }
+ </script>
+
+</body>
+
+</html>
