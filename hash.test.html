@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box{
+        width: 800px;
+        height: 200px;
+        background-color: aquamarine;
+        margin: 50px 0;
+    }
+    .fix{
+        position: fixed;
+        top: 0;
+        right: 50%;
+    }
+</style>
+<body>
+<div class="fix">
+    <a href="#a">a</a>
+    <a href="#b">b</a>
+    <a href="#c">c</a>
+</div>
+
+    <div class="box" id="a">a</div>
+    <div class="box" id="b" style="background-color: blueviolet;">b</div>
+    <div class="box" id="c" style="background-color: coral;">c</div>
+    
+
+<script>
+      window.addEventListener('hashchange', function(){
+        console.log(location.hash);
+    });
+</script>
+</body>
+</html>
