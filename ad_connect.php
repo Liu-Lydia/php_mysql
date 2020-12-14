@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/db_connect.php';
+$title = '通訊錄';
 $pageName = 'ad_connect';
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -8,10 +9,10 @@ $perPage = 3;
 $t_sql = "SELECT COUNT(1) FROM address_book";
 $totalRows = $pdo->query($t_sql)->fetch()['COUNT(1)'];
 $totalPages = ceil($totalRows / $perPage);
-if($page<1) $page = 1;
-if($page>$totalPages) $page = $totalPages;
+if ($page < 1) $page = 1;
+if ($page > $totalPages) $page = $totalPages;
 
-$p_sql = sprintf("SELECT * FROM address_book ORDER BY sid DESC LIMIT %s ,%s", ($page-1) * $perPage, $perPage);
+$p_sql = sprintf("SELECT * FROM address_book ORDER BY sid DESC LIMIT %s ,%s", ($page - 1) * $perPage, $perPage);
 
 $stmt = $pdo->query($p_sql);
 // $stmt = $pdo->query("SELECT * FROM address_book");
@@ -26,8 +27,8 @@ $stmt = $pdo->query($p_sql);
 <?php include __DIR__ . "/parts/navbar.php"; ?>
 
 <style>
-  .remove-icon a i{
-    color:sandybrown;
+  .remove-icon a i {
+    color: sandybrown;
   }
 </style>
 
@@ -37,15 +38,17 @@ $stmt = $pdo->query($p_sql);
     <div class="col">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <li class="page-item <?= $page==1 ? 'disabled' : ''?>"><a class="page-link" href="?page=1"><i class="fas fa-arrow-circle-left"></i></a></li>
-          <li class="page-item <?= $page==1 ? 'disabled' : ''?>"><a class="page-link" href="?page=<?= $page-1?>"><i class="far fa-arrow-alt-circle-left"></i></i></a></li>
-          <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-            <li class="page-item <?= $page == $i ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i?>">
-              <?= $i ?>
-            </a></li>
-          <?php endfor ;?>
-          <li class="page-item <?= $page==$totalPages ? 'disabled' : ''?>"><a class="page-link" href="?page=<?= $page+1?>"><i class="far fa-arrow-alt-circle-right"></i></i></a></li>
-          <li class="page-item <?= $page==$totalPages ? 'disabled' : ''?>"><a class="page-link" href="?page=<?= $totalPages?>"><i class="fas fa-arrow-circle-right"></i></a></li>
+          <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>"><a class="page-link" href="?page=1"><i class="fas fa-arrow-circle-left"></i></a></li>
+          <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= $page - 1 ?>"><i class="far fa-arrow-alt-circle-left"></i></i></a></li>
+          <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+            if ($i >= 1 and $i <= $totalPages) : ?>
+              <li class="page-item <?= $page == $i ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>">
+                  <?= $i ?>
+                </a></li>
+          <?php endif;
+          endfor; ?>
+          <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= $page + 1 ?>"><i class="far fa-arrow-alt-circle-right"></i></i></a></li>
+          <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= $totalPages ?>"><i class="fas fa-arrow-circle-right"></i></a></li>
         </ul>
       </nav>
     </div>
@@ -56,8 +59,8 @@ $stmt = $pdo->query($p_sql);
       <table class="table table-dark">
         <thead>
           <tr>
-          <th scope="col">
-                <i class="fas fa-minus-circle"></i>
+            <th scope="col">
+              <i class="fas fa-minus-circle"></i>
             </th>
             <th scope="col">sid</th>
             <th scope="col">name</th>
@@ -70,15 +73,20 @@ $stmt = $pdo->query($p_sql);
         <tbody>
           <?php while ($r = $stmt->fetch()) : ?>
             <tr>
-            <th class="remove-icon"><a href="#">
-                <i class="fas fa-minus-circle"></i>
-            </a></th>
+              <!-- <td class="remove-icon"><a href="javascript:" onclick="removeItem(event)">
+                  <i class="fas fa-minus-circle"></i>
+                </a></td> -->
+                <td class="remove-icon"><a href="ad_delete.php?sid=<?= $r['sid']?>">
+                  <i class="fas fa-minus-circle"></i>
+                </a></td>
               <td><?= $r['sid'] ?></td>
               <td><?= $r['name'] ?></td>
               <td><?= $r['email'] ?></td>
               <td><?= $r['mobile'] ?></td>
               <td><?= $r['birthday'] ?></td>
-              <td><?= $r['address'] ?></td>
+              <td><?= htmlentities($r['address']) ?></td>
+              <!-- <td><?php //echo strip_tags($r['address']) 
+                        ?></td> -->
             </tr>
           <?php endwhile ?>
         </tbody>
@@ -89,6 +97,14 @@ $stmt = $pdo->query($p_sql);
 
 
 <?php include __DIR__ . "/parts/script.php"; ?>
+
+<script>
+  function removeItem(event) {
+    const t = event.target;
+    t.closest('tr').remove();
+  }
+</script>
+
 <?php include __DIR__ . "/parts/foot.php"; ?>
 
 
