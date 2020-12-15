@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/is_admin.php';
 require __DIR__ . '/db_connect.php';
 $pageName = 'ad_connect';
 

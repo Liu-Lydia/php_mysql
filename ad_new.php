@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . '/is_admin.php';
+
 if (!isset($_SESSION)) {
     session_start();
 }

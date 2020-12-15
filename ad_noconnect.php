@@ -1,14 +1,5 @@
 <?php
-
 require __DIR__ . '/db_connect.php';
-
-if(! isset($_SESSION['admin'])){
-  include __DIR__.'/ad_noconnect.php';
-  exit;
-}
-
-
-
 $title = '通訊錄';
 $pageName = 'ad_connect';
 
@@ -68,16 +59,14 @@ $stmt = $pdo->query($p_sql);
       <table class="table table-dark">
         <thead>
           <tr>
-            <th scope="col">
-              <i class="fas fa-minus-circle"></i>
-            </th>
+            
             <th scope="col">sid</th>
             <th scope="col">name</th>
             <th scope="col">email</th>
             <th scope="col">mobile</th>
             <th scope="col">birthday</th>
             <th scope="col">address</th>
-            <th scope="col"><i class="far fa-edit"></i></th>
+            
           </tr>
         </thead>
         <tbody>
@@ -86,18 +75,14 @@ $stmt = $pdo->query($p_sql);
               <!-- <td class="remove-icon"><a href="javascript:" onclick="removeItem(event)">
                   <i class="fas fa-minus-circle"></i>
                 </a></td> -->
-              <td class="remove-icon"><a href="javascript:del_it(<?= $r['sid'] ?>)">
-                  <i class="fas fa-minus-circle"></i>
-                </a></td>
+           
               <td><?= $r['sid'] ?></td>
               <td><?= $r['name'] ?></td>
               <td><?= $r['email'] ?></td>
               <td><?= $r['mobile'] ?></td>
               <td><?= $r['birthday'] ?></td>
               <td><?= htmlentities($r['address']) ?></td>
-              <td><a href="ad_edit.php?sid=<?= $r['sid'] ?>">
-                  <i class="far fa-edit"></i>
-                </a></td>
+            
               <!-- <td><?php //echo strip_tags($r['address']) 
                         ?></td> -->
             </tr>

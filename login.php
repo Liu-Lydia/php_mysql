@@ -1,17 +1,36 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
-}
+require __DIR__ . '/db_connect.php';
+
+$pageName = 'login';
 $title = '登入';
 
-if (isset($_POST['account']) and isset($_POST['password'])) {
-    if ($_POST['account'] === 'L' and $_POST['password'] === '123') {
-        //可以登入
-        $_SESSION['admin'] = 'L';
-    } else {
+if(isset($_POST['account']) and isset($_POST['password'])){
+
+    $sql = "SELECT * FROM admin WHERE account=? AND password=SHA1(?)";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([
+        $_POST['account'],
+        $_POST['password'],
+    ]);
+
+    $row = $stmt->fetch();
+    if(empty($row)){
         $errormsg = '帳號或密碼錯誤';
+    }else{
+        $_SESSION['admin'] = $row;
     }
 }
+
+// if (isset($_POST['account']) and isset($_POST['password'])) {
+//     if ($_POST['account'] === 'L' and $_POST['password'] === '123') {
+//         //可以登入
+//         $_SESSION['admin'] = 'L';
+//     } else {
+//         $errormsg = '帳號或密碼錯誤';
+//     }
+// }
 
 
 ?>
@@ -37,7 +56,7 @@ if (isset($_POST['account']) and isset($_POST['password'])) {
                     <?php endif ?>
                     <?php if (isset($_SESSION['admin'])) : ?>
                         <div>
-                            <h3>Hello <?= $_SESSION['admin'] ?></h3>
+                            <h3>Hello <?= $_SESSION['admin']['account'] ?></h3>
                             <p><a href="logout.php">登出</a></p>
                         </div>
                     <?php else : ?>
