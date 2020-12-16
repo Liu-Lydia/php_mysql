@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
+    <div id="info"></div>
 
-<div id="info">
-    
-</div>
-    
+    <input type="text" id="kk" placeholder="key" />
+    <input type="text" id="vv" placeholder="value" />
+    <button id="btn" onclick="myPushState()">push it</button>
 
-<script>
+    <script>
+      // document.querySelector('#info').innerHTML = '<h2>Hello</h2>';
+      // alert('hi');
 
-    document.querySelector('#info').innerHTML = '<h2>Hello</h2>';
-    alert('hi');
+      const kk = document.querySelector("#kk");
+      const vv = document.querySelector("#vv");
 
-</script>
-</body>
+      function myPushState() {
+        let obj = {};
+        obj[kk.value] = vv.value;
+
+        const url = new URL(window.location);
+        url.searchParams.set(kk.value, vv.value);
+
+        history.pushState(obj, "", url);
+      }
+
+      window.onpopstate = function (event) {
+        console.log(event.state);
+      };
+    </script>
+  </body>
 </html>
