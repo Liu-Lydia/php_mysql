@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
+-->
+
+    <input type="file" id="file_field" multiple accept="image/*" />
+    <button onclick="checkField()">check</button>
+
+    <script>
+      function checkField() {
+        console.log(file_field.files.length);
+        console.log(file_field.files[0]);
+        console.log(file_field.files);
+      }
+    </script>
+  </body>
+</html>

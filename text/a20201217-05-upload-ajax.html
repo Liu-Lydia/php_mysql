@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="form1" onsubmit="doAjax(); return false;">
+      <input type="file" name="name" accept="image/*" />
+      <!-- input一定要有name才有效果 -->
+      <input type="submit" />
+    </form>
+
+    <img src="" alt="" />
+
+    <script>
+      // action="a20201217-03-upload.php" enctype="multipart/form-data" method="POST"
+function doAjax(){
+    const fd = new FormData(document.form1);
+
+    fetch('a20201217-03-upload.php',{
+        method:'POST',
+        body:fd
+    })
+    .then(r=>r.json())
+    .then(obj=>{
+        console.log(obj);
+        document.querySelector('img').src = '../uploads/' + obj.filename;
+    })
+}
+
+    </script>
+  </body>
+</html>

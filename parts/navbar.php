@@ -28,7 +28,7 @@ if (!isset($pageName)) $pageName = '';
 
         <?php if (isset($_SESSION['admin'])) : ?>
           <li class="nav-item">
-            <a class="nav-link"><?= $_SESSION['admin']['account'] ?></a>
+            <a class="nav-link" href="<?= WEB_ROOM ?>ad_admin_edit.php"><?= $_SESSION['admin']['account'] ?></a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="<?= WEB_ROOM ?>logout.php">登出</a>
